@@ -394,7 +394,7 @@ body {
         let display = 'none';
 
         if (
-          (tds[0] && (!numberFilter || Number(tds[0].textContent) == Number(numberFilter))) &&
+          (tds[0] && tds[0].textContent.toLowerCase().includes(numberFilter) || numberFilter === '') &&
           (tds[1] && tds[1].textContent.toLowerCase().includes(nameFilter) || nameFilter === '') &&
           (tds[2] && tds[2].textContent.toLowerCase().includes(farmFilter) || farmFilter === '') &&
           (tds[3] && tds[3].textContent.toLowerCase().includes(realHoursFilter) || realHoursFilter === '') &&
