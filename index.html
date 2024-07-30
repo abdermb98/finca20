@@ -148,42 +148,56 @@ td:hover {
     box-shadow: 0 10px 20px rgba(0, 255, 255, 0.3);
 }
 
-
 .filter-row {
     background: #e0f2f1; 
     border-bottom: 2px solid #004d40;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 12px;
-    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 4px; /* تقليل نصف قطر الحواف */
+    padding: 3px; /* تقليل الحشو */
     position: relative;
     animation: filterGlow 3s infinite alternate;
+    transition: all 0.3s ease;
+    max-height: 50px; /* تحديد أقصى ارتفاع أقل */
+    overflow-y: auto; /* إضافة تمرير عمودي إذا كان المحتوى أكبر من الحد الأقصى */
 }
 
 @keyframes filterGlow {
-    0% { box-shadow: 0 5px 10px rgba(0, 255, 255, 0.2); }
-    100% { box-shadow: 0 10px 20px rgba(0, 255, 255, 0.4); }
+    0% { box-shadow: 0 2px 4px rgba(0, 255, 255, 0.2); }
+    100% { box-shadow: 0 4px 8px rgba(0, 255, 255, 0.4); }
 }
 
 .filter-row input, .filter-row select {
     border: 2px solid #00796b; 
-    border-radius: 10px;
-    padding: 12px;
-    margin: 6px 0;
-    width: calc(100% - 24px);
+    border-radius: 6px; /* تقليل نصف قطر الحواف */
+    padding: 8px; /* تقليل الحشو */
+    margin: 4px 0; /* تقليل المسافة بين العناصر */
+    width: calc(100% - 20px); /* ضبط العرض */
     box-sizing: border-box;
     background: #ffffff;
     transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+    font-family: 'Arial', sans-serif;
+    font-size: 12px; /* تقليل حجم الخط */
 }
 
 .filter-row input::placeholder {
     color: #888;
+    opacity: 0.8;
 }
 
 .filter-row input:focus, .filter-row select:focus {
     border-color: #004d40; 
     background: #e0f2f1;
-    box-shadow: 0 0 15px rgba(0, 77, 64, 0.3);
+    box-shadow: 0 0 8px rgba(0, 77, 64, 0.5);
+    outline: none;
 }
+
+.filter-row input:hover, .filter-row select:hover {
+    border-color: #004d40;
+    background: #f0f9f8;
+    box-shadow: 0 0 6px rgba(0, 77, 64, 0.2);
+}
+
+
 
 /* تمييز الخلايا غير الصفرية في العمود السادس */
 td.highlight {
