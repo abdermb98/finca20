@@ -4,19 +4,19 @@
   <title>RHHH FINCA</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    /* إعدادات أساسية */
+    /* PARAMETRE */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
-    background: linear-gradient(135deg, #e0eafc, #cfdef3); /* تدرج هادئ بين الأزرق الفاتح والرمادي */
+    background: linear-gradient(135deg, #e0eafc, #cfdef3); /*  COLOR BACKGROUND */
     color: #333;
     overflow-x: hidden;
     overflow-y: auto;
     position: relative;
 }
 
-/* تأثير الإضاءة الخلفية */
+/*BACKGROUND EFFECT */
 body::before {
     content: '';
     position: fixed;
@@ -35,7 +35,7 @@ body::before {
     100% { background-position: 100% 100%; }
 }
 
-/* تأثير الإضاءة المتوهجة للعنصر */
+/* BACKGROUND EFFECT */
 .container {
     width: 100%;
     max-width: 1200px;
@@ -55,7 +55,7 @@ body::before {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* تأثير التوهج في الرأس والتذييل */
+/*FOOTER AND HEEDER*/
 header, footer {
     background: linear-gradient(135deg, #004d40, #00796b); /* color */
     color: #ffffff;
@@ -83,10 +83,10 @@ footer {
     border-radius: 0 0 20px 20px;
 }
 
-/* تأثير النبض للعنصر */
+/* ت */
 .data-summary {
     background: rgba(255, 255, 255, 0.9);
-    border: 2px solid #00796b; /* لون أخضر دافئ */
+    border: 2px solid #00796b; 
     border-radius: 15px;
     padding: 20px;
     margin-bottom: 30px;
@@ -152,13 +152,13 @@ td:hover {
     background: #e0f2f1; 
     border-bottom: 2px solid #004d40;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 4px; /* تقليل نصف قطر الحواف */
-    padding: 3px; /* تقليل الحشو */
+    border-radius: 4px;
+    padding: 3px; 
     position: relative;
     animation: filterGlow 3s infinite alternate;
     transition: all 0.3s ease;
-    max-height: 50px; /* تحديد أقصى ارتفاع أقل */
-    overflow-y: auto; /* إضافة تمرير عمودي إذا كان المحتوى أكبر من الحد الأقصى */
+    max-height: 50px; 
+    overflow-y: auto;
 }
 
 @keyframes filterGlow {
@@ -168,15 +168,15 @@ td:hover {
 
 .filter-row input, .filter-row select {
     border: 2px solid #00796b; 
-    border-radius: 6px; /* تقليل نصف قطر الحواف */
-    padding: 8px; /* تقليل الحشو */
-    margin: 4px 0; /* تقليل المسافة بين العناصر */
-    width: calc(100% - 20px); /* ضبط العرض */
+    border-radius: 6px; 
+    padding: 8px; 
+    margin: 4px 0; 
+    width: calc(100% - 20px); 
     box-sizing: border-box;
     background: #ffffff;
     transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
     font-family: 'Arial', sans-serif;
-    font-size: 12px; /* تقليل حجم الخط */
+    font-size: 12px; 
 }
 
 .filter-row input::placeholder {
@@ -199,9 +199,9 @@ td:hover {
 
 
 
-/* تمييز الخلايا غير الصفرية في العمود السادس */
+/* تمييز الخلايا غير الصفرس */
 td.highlight {
-    background-color: #ff6f61; /* لون برتقالي دافئ */
+    background-color: #ff6f61;
     color: #fff;
     position: relative;
     animation: highlightPulse 2s infinite, highlightGlow 3s infinite;
@@ -242,7 +242,7 @@ td.highlight .warning-icon {
         padding: 10px;
     }
 }
-/* إعدادات أساسية للصفحة */
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
@@ -251,12 +251,12 @@ body {
     color: #333;
 }
 
-/* تصميم الشعار */
+/* تLOGO */
 #logo {
     position: fixed;
-    top: 20px; /* المسافة من الأعلى */
-    right: 20px; /* المسافة من اليمين */
-    background: linear-gradient(45deg, #1abc9c, #3498db); /* تأثير تدرج لوني */
+    top: 20px; 
+    right: 20px; 
+    background: linear-gradient(45deg, #1abc9c, #3498db); 
     color: #ffffff;
     padding: 10px 20px;
     border-radius: 15px;
@@ -265,10 +265,10 @@ body {
     text-transform: uppercase;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    z-index: 1000; /* التأكد من أن الشعار يظهر فوق باقي المحتوى */
+    z-index: 1000; 
 }
 
-/* تأثير التحجيم عند المرور بالفأرة */
+
 #logo:hover {
     transform: scale(1.1);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
@@ -336,8 +336,8 @@ body {
       });
 
       const tableBody = document.getElementById('dataTable');
-      let totalHours4 = 0; // Variable to store the total of the fourth column
-      let totalHours5 = 0; // Variable to store the total of the fifth column
+      let totalHours4 = 0; 
+      let totalHours5 = 0; 
       rows.forEach((row, rowIndex) => {
         const tr = document.createElement('tr');
         row.forEach((cell, cellIndex) => {
@@ -345,13 +345,13 @@ body {
           td.textContent = cell;
           if (cellIndex === 5 && cell != 0) {
             td.classList.add('highlight');
-            td.innerHTML += '<i class="fas fa-exclamation-triangle warning-icon"></i>'; // Ajout de l'icône d'avertissement
+            td.innerHTML += '<i class="fas fa-exclamation-triangle warning-icon"></i>'; 
           }
           if (cellIndex === 3) {
-            totalHours4 += Number(cell); // Adding to the total if in the fourth column
+            totalHours4 += Number(cell); 
           }
           if (cellIndex === 4) {
-            totalHours5 += Number(cell); // Adding to the total if in the fifth column
+            totalHours5 += Number(cell); 
           }
 		  
           tr.appendChild(td);
@@ -359,7 +359,7 @@ body {
         tableBody.appendChild(tr);
       });
 
-      // Update the data summary section with the total of the fourth and fifth columns
+      // TOTAL HEURES
       const dataSummary = document.getElementById('dataSummary');
 	  const de = totalHours4 - totalHours5
 	  const percentageDifference = ((totalHours4 / totalHours5) * 100-100).toFixed(2);
