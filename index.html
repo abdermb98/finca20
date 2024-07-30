@@ -283,11 +283,10 @@ body {
   </header>
   <div class="container">
     <div class="data-summary" id="dataSummary">
-       Calculation des totaux des heures...
+       Calculation des donnees...
     </div>
 	
     <div class="content">
-      <center><h2>Comparaison des heures de travail</h2></center>
       <table id="workHoursTable">
         <thead>
           
@@ -362,7 +361,10 @@ body {
 
       // Update the data summary section with the total of the fourth and fifth columns
       const dataSummary = document.getElementById('dataSummary');
-      dataSummary.textContent =` Total des heures dans Agrotareo: ${totalHours4} *  *  * Total des heures dans le Pointage : ${totalHours5}` ;
+	  const de = totalHours4 - totalHours5
+	  const percentageDifference = ((totalHours4 / totalHours5) * 100-100).toFixed(2);
+	  
+	  dataSummary.textContent =` Agrotareo: ${totalHours4}h * Pointage : ${totalHours5}h * Différence  ${de}h * Pourcentage de Différence: ${percentageDifference}%  ` ;
     }
 
     function compare(value, filter, comparison) {
