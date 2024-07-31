@@ -365,6 +365,8 @@ body {
       dataSummary.textContent = `Agrotareo: ${totalHours4}h * Pointage: ${totalHours5}h * Différence: ${de}h * Pourcentage de Différence: ${percentageDifference}%`;
     }
 
+	  
+
     function compare(value, filter, comparison) {
       switch (comparison) {
         case 'equals':
@@ -422,21 +424,17 @@ body {
           display = '';
         }
 
-        const col4 = tds[3] && Number(tds[3].textContent.trim()) === 0;
-        const col5 = tds[4] && Number(tds[4].textContent.trim()) === 0;
-        if (display === '' && (col4 || col5)) {
-          display = 'none';
-        }
-
-        if (display === '') {
-          totalHours4 += Number(tds[3] ? tds[3].textContent : 0);
-          totalHours5 += Number(tds[4] ? tds[4].textContent : 0);
-        }
+        
 
         rows[i].style.display = display;
       }
 
       updateDataSummary(totalHours4, totalHours5);
+	  if (percentageDifference == 0) {
+        dataSummary.style.color = 'red';
+    } else {
+        dataSummary.style.color = ''; // إعادة تعيين اللون الافتراضي إذا لم تكن النسبة صفر
+    }
     }
 
     fetchData();
