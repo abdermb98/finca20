@@ -54,34 +54,6 @@ body::before {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* تأثير التوهج في الرأس والتذييل */
-header, footer {
-    background: linear-gradient(135deg, #004d40, #00796b); /* color */
-    color: #ffffff;
-    padding: 20px;
-    border-radius: 20px;
-    text-align: center;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-    animation: headerFooterGlow 1.5s ease-in-out infinite;
-}
-
-@keyframes headerFooterGlow {
-    0% { box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); }
-    50% { box-shadow: 0 20px 40px rgba(0, 255, 255, 0.5); }
-    100% { box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); }
-}
-
-header {
-    border-radius: 20px 20px 0 0;
-}
-
-footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    border-radius: 0 0 20px 20px;
-}
-
 /* تأثير النبض للعنصر */
 .data-summary {
     background: rgba(255, 255, 255, 0.9);
@@ -250,35 +222,11 @@ body {
     color: #333;
 }
 
-/* تصميم الشعار */
-#logo {
-    position: fixed;
-    top: 20px; /* المسافة من الأعلى */
-    right: 20px; /* المسافة من اليمين */
-    background: linear-gradient(45deg, #1abc9c, #3498db); /* تأثير تدرج لوني */
-    color: #ffffff;
-    padding: 10px 20px;
-    border-radius: 15px;
-    font-size: 1.5em;
-    font-weight: bold;
-    text-transform: uppercase;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    z-index: 1000; /* التأكد من أن الشعار يظهر فوق باقي المحتوى */
-}
 
-/* تأثير التحجيم عند المرور بالفأرة */
-#logo:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
-}
 </style>
 </head>
 <body>
-    <div id="logo">AGROTAREO</div>
-  <header>
-    <h1>POINTAGE FINCA </h1>
-  </header>
+    
   <div class="container">
     <div class="data-summary" id="dataSummary">
        Calculation des totaux des heures...
