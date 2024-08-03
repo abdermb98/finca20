@@ -221,12 +221,27 @@ body {
     background: #f0f4f8;
     color: #333;
 }
-
+.navigate-button {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 20px 0;
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+      background-color: #1e3a8a;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .navigate-button:hover {
+      background-color: #2b4a8f;
+    }
 
 </style>
 </head>
 <body>
-    
+    <button class="navigate-button" onclick="navigateToPage()">Go to Pointage</button>
   <div class="container">
     <div class="data-summary" id="dataSummary">
        Calculation des totaux des heures...
@@ -263,6 +278,9 @@ body {
   </div>
 
   <script>
+	  function navigateToPage() {
+      window.location.href = 'https://abdermb98.github.io/pointage/'; // استبدل هذا بالرابط الخاص بك
+    }
     const url = 'https://script.googleusercontent.com/macros/echo?user_content_key=dMMaM4xkIbEYrLLRBCAokpyV0NTl2dNiptsHQ99XP-ttqRXYup7bv8Q0t5M18iUlhB-S_kgRjIrr8A9u8W33fhE_2JCZz2vym5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnPA1OUQ3x_oHy4M7U2xcqugygc1wIwdYhCYE8oZrCGTqN3mfL-62Vs2e2xbsCPzlNgFmfXwK3iZDC39yjhHd58mA2nlo03ik-A&lib=MlRalld_N0-QgjgZWVyXmPt3xLYHdXm_G';
 
     async function fetchData() {
