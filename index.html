@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Table with Totals, Difference, and Filters</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>POINTAGE</title>
     <style>
        body {
-    font-family: Arial, sans-serif;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     background-color: #e0f2f1;
     margin: 0;
     padding: 0;
@@ -22,7 +23,7 @@ header {
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 1600px;
     margin: 30px auto;
     padding: 20px;
     background-color: white;
@@ -43,7 +44,7 @@ th, td {
 }
 
 th {
-    background-color: #004d40;
+    background-color: #047c68;
     color: white;
 }
 
@@ -110,100 +111,96 @@ th {
     margin-right: 0;
 }
 
-/* Style the button that opens the dropdown */
-.dropbtn, .nested-dropbtn, .sub-nested-dropbtn {
-    background-color: #004d40; /* Match your desired color */
+/* Style the dropdown button */
+.dropbtn {
+    background-color: #004d40;
     color: white;
     padding: 10px 20px;
     font-size: 16px;
     border: none;
     cursor: pointer;
-    border-radius: 4px;
-    width: 100%;
-    text-align: left;
+    border-radius: 5px;
 }
 
-/* The container <div> - needed to position the dropdown content */
-.dropdown, .nested-dropdown, .sub-nested-dropdown {
-    position: relative;
+/* Dropdown container */
+.dropdown {
+    position: fixed;
     display: inline-block;
 }
 
-/* Dropdown Content (Hidden by Default) */
-.dropdown-content, .nested-dropdown-content, .sub-nested-dropdown-content {
+/* Dropdown content (hidden by default) */
+.dropdown-content {
     display: none;
     position: absolute;
-    background-color: #f9f9f9;
+    background-color: #ffffff;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
-    border-radius: 4px;
 }
 
 /* Links inside the dropdown */
-.dropdown-content a, .nested-dropdown-content a, .sub-nested-dropdown-content a {
-    color: black;
+.dropdown-content a {
+    color: #000000;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
 }
 
 /* Change color of dropdown links on hover */
-.dropdown-content a:hover, .nested-dropdown-content a:hover, .sub-nested-dropdown-content a:hover {
-    background-color: #f1f1f1;
-}
+.dropdown-content a:hover {background-color: #ddd;}
 
-/* Show the dropdown menu on hover */
+/* Show the dropdown menu */
 .dropdown:hover .dropdown-content {
     display: block;
 }
 
-/* Show the nested dropdown menu on hover */
-.dropdown .nested-dropdown:hover .nested-dropdown-content {
-    display: block;
-}
-
-/* Show the sub-nested dropdown menu on hover */
-.nested-dropdown .sub-nested-dropdown:hover .sub-nested-dropdown-content {
-    display: block;
-}
-
-/* Change the background color of the button when the dropdown content is shown */
-.dropdown:hover .dropbtn {
-    background-color: #00796b; /* A slightly lighter shade of your color */
-}
-
-/* Style for the nested dropdown */
+/* Nested dropdown container */
 .nested-dropdown {
     position: relative;
 }
 
-/* Position nested dropdown */
+/* Nested dropdown button */
+.nested-dropbtn {
+    background-color: #00796b;
+    color: white;
+    padding: 10px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* Nested dropdown content (hidden by default) */
 .nested-dropdown-content {
-    top: 0;
-    left: 100%;
-    margin-left: 10px; /* Adjust as needed */
+    display: none;
+    position: absolute;
+    background-color: #ffffff;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 2;
 }
 
-/* Style for the sub-nested dropdown */
-.sub-nested-dropdown {
-    position: relative;
+/* Show the nested dropdown content on hover */
+.nested-dropdown:hover .nested-dropdown-content {
+    display: block;
 }
 
-/* Position sub-nested dropdown */
-.sub-nested-dropdown-content {
-    top: 0;
-    left: 100%;
-    margin-left: 10px; /* Adjust as needed */
+/* Links inside the nested dropdown */
+.nested-dropdown-content a {
+    color: #000000;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
 }
 
-    
+/* Change color of nested dropdown links on hover */
+.nested-dropdown-content a:hover {background-color: #ddd;}
+
     </style>
 </head>
 <body>
-<div class="container">
     <div class="dropdown">
-        <button class="dropbtn">Select a Day</button>
+        <button class="dropbtn">MENU</button>
         <div class="dropdown-content" id="dayDropdown">
             <a href="#"></a>
             <a href="#">Pointage manuel</a>
@@ -213,8 +210,8 @@ th {
             <a href="https://193.56.164.133:8443/Tareo/productivity_log/">productivite</a>
             <a href="https://193.56.164.133:8443/Tareo/machinerymarking/">Modifier rnd tracteur</a>
             <div class="nested-dropdown">
-
-                <button class="nested-dropbtn">Other Options</button>
+      
+                <button class="nested-dropbtn">JOUR</button>
                 <div class="nested-dropdown-content">
                     <a href="https://aromaherbex.github.io/LUNDI/">LUNDI</a>
                     <a href="https://aromaherbex.github.io/MARDI/">MARDI</a>
@@ -226,12 +223,14 @@ th {
                 </div>
             </div>
         </div>
-    </div>
-    
+      </div>
+     
+<div class="container">
+   
 <div class="totals">
-    <span class="total-item">Total Column 4: <span id="totalColumn4">0</span></span>
-    <span class="total-item">Total Column 5: <span id="totalColumn5">0</span></span>
-    <span class="total-item">Difference (4 - 5): <span id="difference">0</span></span>
+    <span class="total-item">TOTAL H AGROTAREO: <span id="totalColumn4">0</span></span>
+    <span class="total-item">TOTAL H POINTAGE: <span id="totalColumn5">0</span></span>
+    <span class="total-item">Difference : <span id="difference">0</span></span>
 </div>
 
 <table id="dataTable">
@@ -267,12 +266,11 @@ th {
 
     // Function to format date to YYYY-MM-DD
     function formatDate(dateString) {
-        const [day, month, year] = dateString.split('/').map(Number);
-        const formattedDate = new Date(year, month - 1, day);
-        const formattedYear = formattedDate.getFullYear();
-        const formattedMonth = String(formattedDate.getMonth() + 1).padStart(2, '0');
-        const formattedDay = String(formattedDate.getDate()).padStart(2, '0');
-        return `${formattedYear}-${formattedMonth}-${formattedDay}`;
+        const dateObj = new Date(dateString);
+        const day = dateObj.getDate()+1;
+        const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+        const year = dateObj.getFullYear();
+        return `${year}-${month}-${day}`;
     }
 
     // Function to update totals and difference
@@ -298,9 +296,9 @@ th {
         });
 
         const difference = totalColumn4 - totalColumn5;
-        document.getElementById('totalColumn4').textContent = totalColumn4.toFixed(2);
-        document.getElementById('totalColumn5').textContent = totalColumn5.toFixed(2);
-        document.getElementById('difference').textContent = difference.toFixed(2);
+        document.getElementById('totalColumn4').textContent = totalColumn4.toFixed(1)+" H";
+        document.getElementById('totalColumn5').textContent = totalColumn5.toFixed(1)+" H";
+        document.getElementById('difference').textContent = difference.toFixed(1)+" H";
     }
 
     // Fetch data from Google Sheets
@@ -338,7 +336,7 @@ th {
                     // If this is column 6 and its value is not 0, add the Edit button
                     if (index === 5 && parseInt(row[key], 10) !== 0) {
                         const editButton = document.createElement("button");
-                        editButton.textContent = "Edit";
+                        editButton.textContent = "Modifier";
                         editButton.classList.add("edit-btn");
                         editButton.onclick = function() {
                             const cell1Value = newRow.cells[0].textContent.trim();
@@ -409,52 +407,7 @@ th {
         updateTotals();
     }
 
-// Toggle main dropdown
-document.querySelector('.dropbtn').addEventListener('click', function() {
-    var dropdownContent = document.getElementById('dayDropdown');
-    dropdownContent.style.display = (dropdownContent.style.display === 'block') ? 'none' : 'block';
-});
 
-// Toggle nested dropdown
-document.querySelector('.nested-dropbtn').addEventListener('click', function(event) {
-    event.stopPropagation(); // Prevent closing the main dropdown
-    var nestedDropdownContent = this.nextElementSibling;
-    nestedDropdownContent.style.display = (nestedDropdownContent.style.display === 'block') ? 'none' : 'block';
-});
-
-// Toggle sub-nested dropdown
-document.querySelector('.sub-nested-dropbtn').addEventListener('click', function(event) {
-    event.stopPropagation(); // Prevent closing the nested dropdown
-    var subNestedDropdownContent = this.nextElementSibling;
-    subNestedDropdownContent.style.display = (subNestedDropdownContent.style.display === 'block') ? 'none' : 'block';
-});
-
-// Close the dropdowns if the user clicks outside of them
-window.onclick = function(event) {
-    if (!event.target.matches('.dropbtn') && !event.target.matches('.nested-dropbtn') && !event.target.matches('.sub-nested-dropbtn')) {
-        var dropdowns = document.getElementsByClassName('dropdown-content');
-        for (var i = 0; i < dropdowns.length; i++) {
-            var openDropdown = dropdowns[i];
-            if (openDropdown.style.display === 'block') {
-                openDropdown.style.display = 'none';
-            }
-        }
-        var nestedDropdowns = document.getElementsByClassName('nested-dropdown-content');
-        for (var j = 0; j < nestedDropdowns.length; j++) {
-            var openNestedDropdown = nestedDropdowns[j];
-            if (openNestedDropdown.style.display === 'block') {
-                openNestedDropdown.style.display = 'none';
-            }
-        }
-        var subNestedDropdowns = document.getElementsByClassName('sub-nested-dropdown-content');
-        for (var k = 0; k < subNestedDropdowns.length; k++) {
-            var openSubNestedDropdown = subNestedDropdowns[k];
-            if (openSubNestedDropdown.style.display === 'block') {
-                openSubNestedDropdown.style.display = 'none';
-            }
-        }
-    }
-}
 
 </script>
 
