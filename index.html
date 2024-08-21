@@ -1,422 +1,462 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>RHHH F20</title>
-  <style>
- /* إعدادات أساسية */
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table with Totals, Difference, and Filters</title>
+    <style>
+       body {
+    font-family: Arial, sans-serif;
+    background-color: #e0f2f1;
     margin: 0;
     padding: 0;
-    background: linear-gradient(135deg, #e0eafc, #cfdef3); /* تدرج هادئ بين الأزرق الفاتح والرمادي */
-    color: #333;
-    overflow-x: hidden;
-    overflow-y: auto;
-    position: relative;
 }
 
-/* تأثير الإضاءة الخلفية */
-body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, rgba(0, 0, 0, 0) 70%);
-    pointer-events: none;
-    z-index: -1;
-    animation: backgroundGlow 15s infinite linear;
-}
-
-@keyframes backgroundGlow {
-    0% { background-position: 0% 0%; }
-    100% { background-position: 100% 100%; }
-}
-
-/* تأثير الإضاءة المتوهجة للعنصر */
-.container {
-    width: 100%;
-    max-width: 1200px;
-    margin: 10px auto;
-    padding: 30px;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(15px);
-    position: relative;
-    overflow: hidden;
-    animation: containerFadeIn 1.5s ease-out;
-}
-
-@keyframes containerFadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* تأثير النبض للعنصر */
-.data-summary {
-    background: rgba(255, 255, 255, 0.9);
-    border: 2px solid #00796b; /* لون أخضر دافئ */
-    border-radius: 15px;
+header {
+    background-color: #004d40;
+    color: white;
     padding: 20px;
-    margin-bottom: 15px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
     text-align: center;
-    font-size: 1.1em;
-    color: #333;
-    animation: summaryPulse 5s ease-in-out infinite;
+    font-size: 28px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-@keyframes summaryPulse {
-    0% { transform: scale(1); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); }
-    50% { transform: scale(1.05); box-shadow: 0 20px 40px rgba(0, 255, 255, 0.3); }
-    100% { transform: scale(1); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); }
+.container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 5px;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    animation: tableFadeIn 1.5s ease-out;
-}
-
-@keyframes tableFadeIn {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
+    margin-bottom: 20px;
 }
 
 th, td {
-    padding: 8px;
-    padding-left:20px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    border: 1px solid #b2dfdb;
+    padding: 12px;
+    text-align: center;
 }
 
 th {
-    background: #004d40; 
-    color: #ffffff;
-    font-size: 1.1em;
+    background-color: #004d40;
+    color: white;
 }
 
-th:hover {
-    background: #00796b; 
+.highlight {
+    background-color: #862f3c; /* Light red background */
+    color: #f3f3f3; /* Dark red text color */
+}
+
+.edit-btn {
+    background-color: #00796b;
+    color: white;
+    border: none;
+    padding: 8px 14px;
     cursor: pointer;
+    border-radius: 6px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-left: 40px;
 }
 
-td {
-    background: #ffffff;
-    color: #333;
+.edit-btn:hover {
+    background-color: #004d40;
+    transform: scale(1.05);
 }
 
-td:hover {
-    background: #e0f2f1; 
-    transform: scale(1.02);
-    box-shadow: 0 10px 20px rgba(0, 255, 255, 0.3);
+.filter-input, .filter-select {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #80cbc4;
+    border-radius: 6px;
+    margin-bottom: 0px;
+    background-color: #f9fbe7;
+    position: sticky;
 }
 
+.filter-select {
+    background-color: #ffffff;
+}
 
-.filter-row {
-    background: #e0f2f1; 
-    border-bottom: 2px solid #004d40;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 4px; /* تقليل نصف قطر الحواف */
-    padding: 3px; /* تقليل الحشو */
+.totals {
+    margin-bottom: 20px;
+    padding: 20px;
+    background: linear-gradient(to right, #004d40, #00796b);
+    color: white;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+    
+}
+
+.total-item {
+    margin-right: 20px;
+    display: inline-block;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.total-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.total-item:last-child {
+    margin-right: 0;
+}
+
+/* Style the button that opens the dropdown */
+.dropbtn, .nested-dropbtn, .sub-nested-dropbtn {
+    background-color: #004d40; /* Match your desired color */
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    width: 100%;
+    text-align: left;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown, .nested-dropdown, .sub-nested-dropdown {
     position: relative;
-    animation: filterGlow 3s infinite alternate;
-    transition: all 0.3s ease;
-    max-height: 50px; /* تحديد أقصى ارتفاع أقل */
-    overflow-y: auto; /* إضافة تمرير عمودي إذا كان المحتوى أكبر من الحد الأقصى */
+    display: inline-block;
 }
 
-@keyframes filterGlow {
-    0% { box-shadow: 0 2px 4px rgba(0, 255, 255, 0.2); }
-    100% { box-shadow: 0 4px 8px rgba(0, 255, 255, 0.4); }
-}
-
-.filter-row input, .filter-row select {
-    border: 2px solid #00796b; 
-    border-radius: 6px; /* تقليل نصف قطر الحواف */
-    padding: 8px; /* تقليل الحشو */
-    margin: 4px 0; /* تقليل المسافة بين العناصر */
-    width: calc(100% - 20px); /* ضبط العرض */
-    box-sizing: border-box;
-    background: #ffffff;
-    transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
-    font-family: 'Arial', sans-serif;
-    font-size: 12px; /* تقليل حجم الخط */
-}
-
-.filter-row input::placeholder {
-    color: #888;
-    opacity: 0.8;
-}
-
-.filter-row input:focus, .filter-row select:focus {
-    border-color: #004d40; 
-    background: #e0f2f1;
-    box-shadow: 0 0 8px rgba(0, 77, 64, 0.5);
-    outline: none;
-}
-
-.filter-row input:hover, .filter-row select:hover {
-    border-color: #004d40;
-    background: #f0f9f8;
-    box-shadow: 0 0 6px rgba(0, 77, 64, 0.2);
-}
-
-
-/* تمييز الخلايا غير الصفرية في العمود السادس */
-td.highlight {
-    background-color: #ff6f61; /* لون برتقالي دافئ */
-    color: #fff;
-    position: relative;
-    animation: highlightPulse 2s infinite, highlightGlow 3s infinite;
-}
-
-@keyframes highlightPulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-}
-
-@keyframes highlightGlow {
-    0% { box-shadow: 0 0 8px rgba(255, 105, 97, 0.6); }
-    100% { box-shadow: 0 0 16px rgba(255, 105, 97, 0.8); }
-}
-
-td.highlight .warning-icon {
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content, .nested-dropdown-content, .sub-nested-dropdown-content {
+    display: none;
     position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-    color: #fff;
-    font-size: 1.2em;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 4px;
 }
 
-@media (max-width: 768px) {
-    .container {
-        width: 95%;
-    }
+/* Links inside the dropdown */
+.dropdown-content a, .nested-dropdown-content a, .sub-nested-dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
 }
 
-@media (max-width: 480px) {
-    .data-summary {
-        font-size: 1em;
-        padding: 15px;
-    }
-    .filter-row input, .filter-row select {
-        width: 100%;
-        padding: 10px;
-    }
-}
-/* إعدادات أساسية للصفحة */
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    padding: 0;
-    background: #f0f4f8;
-    color: #333;
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover, .nested-dropdown-content a:hover, .sub-nested-dropdown-content a:hover {
+    background-color: #f1f1f1;
 }
 
- .navigate-button {
-      display: inline-block;
-      padding: 10px 20px;
-      margin: 10px 0;
-      font-size: 16px;
-      font-weight: 600;
-      color: #fff;
-      background-color: #1e3a8a;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    .navigate-button:hover {
-      background-color: #2b4a8f;
-    }
-</style>
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Show the nested dropdown menu on hover */
+.dropdown .nested-dropdown:hover .nested-dropdown-content {
+    display: block;
+}
+
+/* Show the sub-nested dropdown menu on hover */
+.nested-dropdown .sub-nested-dropdown:hover .sub-nested-dropdown-content {
+    display: block;
+}
+
+/* Change the background color of the button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+    background-color: #00796b; /* A slightly lighter shade of your color */
+}
+
+/* Style for the nested dropdown */
+.nested-dropdown {
+    position: relative;
+}
+
+/* Position nested dropdown */
+.nested-dropdown-content {
+    top: 0;
+    left: 100%;
+    margin-left: 10px; /* Adjust as needed */
+}
+
+/* Style for the sub-nested dropdown */
+.sub-nested-dropdown {
+    position: relative;
+}
+
+/* Position sub-nested dropdown */
+.sub-nested-dropdown-content {
+    top: 0;
+    left: 100%;
+    margin-left: 10px; /* Adjust as needed */
+}
+
+    
+    </style>
 </head>
 <body>
-   <button class="navigate-button" onclick="navigateToPage()">Go to Pointage</button>
-  <div class="container">
-    <div class="data-summary" id="dataSummary">
-      Calculation des totaux des heures...
+<div class="container">
+    <div class="dropdown">
+        <button class="dropbtn">Select a Day</button>
+        <div class="dropdown-content" id="dayDropdown">
+            <a href="#"></a>
+            <a href="#">Pointage manuel</a>
+            <a href="https://193.56.164.133:8443/reportes/Reporte/?key=Partes_Rendimientos">Rendement</a>
+            <a href="https://193.56.164.133:8443/reportes/Reporte/?key=Marcheting">Rendement de tracteur</a>
+            <a href="https://193.56.164.133:8443/ControlRoute/task/">Access Taches</a>
+            <a href="https://193.56.164.133:8443/Tareo/productivity_log/">productivite</a>
+            <a href="https://193.56.164.133:8443/Tareo/machinerymarking/">Modifier rnd tracteur</a>
+            <div class="nested-dropdown">
+
+                <button class="nested-dropbtn">Other Options</button>
+                <div class="nested-dropdown-content">
+                    <a href="https://aromaherbex.github.io/LUNDI/">LUNDI</a>
+                    <a href="https://aromaherbex.github.io/MARDI/">MARDI</a>
+                    <a href="https://aromaherbex.github.io/MERCREDI/">MERCREDI</a>
+                    <a href="https://aromaherbex.github.io/JEUDI/">JEUDI</a>
+                    <a href="https://aromaherbex.github.io/VENDREDI/">VENDREDI</a>
+                    <a href="https://aromaherbex.github.io/SAMEDI/">SAMEDI</a>
+                    <a href="https://aromaherbex.github.io/DIMANCHE/">DIMANCHE</a>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="content">
-      <table id="workHoursTable">
-        <thead>
-          <tr id="headerRow">
-            <!-- رأس الجدول سيتم إدراجه هنا -->
-          </tr>
-          <tr class="filter-row">
-            <!-- صف الفلاتر -->
-            <th><input type="text" id="numberFilter" onkeyup="filterTable()" placeholder="MATRICULE..."></th>
-            <th><input type="text" id="nameFilter" onkeyup="filterTable()" placeholder="NOMBRE..."></th>
-            <th><input type="text" id="farmFilter" onkeyup="filterTable()" placeholder="EQUIPE..."></th>
-            <th><input type="text" id="realHoursFilter" onkeyup="filterTable()" placeholder="AGRO TAREO..."></th>
-            <th><input type="text" id="recordedHoursFilter" onkeyup="filterTable()" placeholder="RHHH..."></th>
+    
+<div class="totals">
+    <span class="total-item">Total Column 4: <span id="totalColumn4">0</span></span>
+    <span class="total-item">Total Column 5: <span id="totalColumn5">0</span></span>
+    <span class="total-item">Difference (4 - 5): <span id="difference">0</span></span>
+</div>
+
+<table id="dataTable">
+    <thead>
+        <tr>
+            <th><input type="text" class="filter-input" placeholder="Filter Column 1"></th>
+            <th><input type="text" class="filter-input" placeholder="Filter Column 2"></th>
+            <th><input type="text" class="filter-input" placeholder="Filter Column 3"></th>
+            <th><input type="text" class="filter-input" placeholder="Filter Column 4"></th>
+            <th><input type="text" class="filter-input" placeholder="Filter Column 5"></th>
             <th>
-              <input type="text" id="differenceFilter" onkeyup="filterTable()" placeholder="Afficher les différences non nulles uniquement...">
-              <select id="differenceComparison" onchange="filterTable()">
-                <option value="contains">Contient</option> 
-                <option value="equals">Égal à</option>
-                <option value="greater">Supérieur à</option>
-                <option value="less">Inférieur à</option>
-              </select>
+                <input type="text" class="filter-input" placeholder="Filter Column 6">
+                <select class="filter-select" id="column6Filter">
+                    <option value="">All</option>
+                    <option value="less">Less</option>
+                    <option value="greater">Greater</option>
+                </select>
             </th>
-            <th><input type="text" id="column7Filter" onkeyup="filterTable()" placeholder="FINCA..."></th>
-            <th><input type="text" id="c8r" onkeyup="filterTable()" placeholder="DATE..."></th>
-          </tr>
-        </thead>
-        <tbody id="dataTable">
-          <!-- البيانات سيتم إدراجها هنا -->
-        </tbody>
-      </table>
-    </div>
-  </div>
+            <th><input type="text" class="filter-input" placeholder="Filter Column 7"></th>
+            <th><input type="text" class="filter-input" placeholder="Filter Column 8"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Data will be loaded here -->
+    </tbody>
+</table>
 
-  <script>
-  function navigateToPage() {
-      window.location.href = 'https://abdermb98.github.io/pointage/'; // استبدل هذا بالرابط الخاص بك
-    }
-    const url = 'https://script.googleusercontent.com/macros/echo?user_content_key=dMMaM4xkIbEYrLLRBCAokpyV0NTl2dNiptsHQ99XP-ttqRXYup7bv8Q0t5M18iUlhB-S_kgRjIrr8A9u8W33fhE_2JCZz2vym5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnPA1OUQ3x_oHy4M7U2xcqugygc1wIwdYhCYE8oZrCGTqN3mfL-62Vs2e2xbsCPzlNgFmfXwK3iZDC39yjhHd58mA2nlo03ik-A&lib=MlRalld_N0-QgjgZWVyXmPt3xLYHdXm_G';
+<script>
 
-    async function fetchData() {
-      const response = await fetch(url);
-      const data = await response.json();
-      const headers = data.headers;
-      const rows = data.rows;
+    
+    // URL of the Google Apps Script web app
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbznhZuAdGn8-AoDha0AgOGEoCnOdaNLzYWeNnIeTczDDqg7oIKf16jBBxkhVVPA6JaS/exec';
 
-      const tableHeader = document.getElementById('headerRow');
-      headers.forEach(header => {
-        const th = document.createElement('th');
-        th.textContent = header;
-        tableHeader.appendChild(th);
-      });
-
-      const tableBody = document.getElementById('dataTable');
-      let totalHours4 = 0; // Variable to store the total of the fourth column
-      let totalHours5 = 0; // Variable to store the total of the fifth column
-      rows.forEach((row, rowIndex) => {
-        const tr = document.createElement('tr');
-        row.forEach((cell, cellIndex) => {
-          const td = document.createElement('td');
-          if (cellIndex === 7) { // Assuming the date is in the 8th column
-            td.textContent = formatDate(cell);
-          } else {
-            td.textContent = cell;
-          }
-          if (cellIndex === 5 && cell != 0) {
-            td.classList.add('highlight');
-            td.innerHTML += '<i class="fas fa-exclamation-triangle warning-icon"></i>'; // Add warning icon
-          }
-          if (cellIndex === 3) {
-            totalHours4 += Number(cell); // Adding to the total if in the fourth column
-          }
-          if (cellIndex === 4) {
-            totalHours5 += Number(cell); // Adding to the total if in the fifth column
-          }
-          tr.appendChild(td);
-        });
-        tableBody.appendChild(tr);
-      });
-
-      // Update the data summary section with the total of the fourth and fifth columns
-      updateDataSummary(totalHours4, totalHours5);
-    }
-
-    function updateDataSummary(totalHours4, totalHours5) {
-      const de = totalHours4 - totalHours5;
-      const percentageDifference = ((totalHours4 / totalHours5) * 100 - 100).toFixed(2);
-
-      const dataSummary = document.getElementById('dataSummary');
-      dataSummary.textContent = `Agrotareo: ${totalHours4}h * Pointage: ${totalHours5}h * Différence: ${de}h * Pourcentage de Différence: ${percentageDifference}%`;
-    }
-
+    // Function to format date to YYYY-MM-DD
     function formatDate(dateString) {
-      const date = new Date(dateString);
-      const day = String(date.getDate()).padStart(2, '0');
-      const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-      const year = date.getFullYear();
-      return `${month}-${day}-${year}`;
+        const [day, month, year] = dateString.split('/').map(Number);
+        const formattedDate = new Date(year, month - 1, day);
+        const formattedYear = formattedDate.getFullYear();
+        const formattedMonth = String(formattedDate.getMonth() + 1).padStart(2, '0');
+        const formattedDay = String(formattedDate.getDate()).padStart(2, '0');
+        return `${formattedYear}-${formattedMonth}-${formattedDay}`;
     }
 
-    function compare(value, filter, comparison) {
-      switch (comparison) {
-        case 'equals':
-          return value == filter;
-        case 'greater':
-          return Number(value) > Number(filter);
-        case 'less':
-          return Number(value) < Number(filter);
-        case 'contains':
-        default:
-          return value.includes(filter);
-      }
+    // Function to update totals and difference
+    function updateTotals() {
+        const table = document.getElementById('dataTable');
+        const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+
+        let totalColumn4 = 0;
+        let totalColumn5 = 0;
+
+        Array.from(rows).forEach(row => {
+            if (row.style.display !== 'none') { // Only include visible rows
+                const cell4 = row.getElementsByTagName('td')[3];
+                const cell5 = row.getElementsByTagName('td')[4];
+
+                if (cell4) {
+                    totalColumn4 += parseFloat(cell4.textContent) || 0;
+                }
+                if (cell5) {
+                    totalColumn5 += parseFloat(cell5.textContent) || 0;
+                }
+            }
+        });
+
+        const difference = totalColumn4 - totalColumn5;
+        document.getElementById('totalColumn4').textContent = totalColumn4.toFixed(2);
+        document.getElementById('totalColumn5').textContent = totalColumn5.toFixed(2);
+        document.getElementById('difference').textContent = difference.toFixed(2);
     }
 
-    function filterTable() {
-      const numberFilter = document.getElementById('numberFilter').value.toLowerCase();
-      const nameFilter = document.getElementById('nameFilter').value.toLowerCase();
-      const farmFilter = document.getElementById('farmFilter').value.toLowerCase();
-      const realHoursFilter = document.getElementById('realHoursFilter').value.toLowerCase();
-      const recordedHoursFilter = document.getElementById('recordedHoursFilter').value.toLowerCase();
-      const differenceFilter = document.getElementById('differenceFilter').value.toLowerCase();
-      const differenceComparison = document.getElementById('differenceComparison').value;
-      const column7Filter = document.getElementById('column7Filter').value.toLowerCase();
+    // Fetch data from Google Sheets
+    fetch(scriptURL)
+        .then(response => response.json())
+        .then(data => {
+            console.log('Data fetched successfully:', data); // Log the fetched data
 
-      console.log('Filters:', {
-        numberFilter,
-        nameFilter,
-        farmFilter,
-        realHoursFilter,
-        recordedHoursFilter,
-        differenceFilter,
-        differenceComparison,
-        column7Filter
-      });
+            const tableBody = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
 
-      const table = document.getElementById('workHoursTable');
-      const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+            // Clear existing rows if any
+            tableBody.innerHTML = '';
 
-      let totalHours4 = 0; // Variable to store the total of the fourth column
-      let totalHours5 = 0; // Variable to store the total of the fifth column
+            data.forEach(row => {
+                const newRow = tableBody.insertRow();
 
-      for (let i = 0; i < rows.length; i++) {
-        const tds = rows[i].getElementsByTagName('td');
-        let display = 'none';
+                Object.keys(row).forEach((key, index) => {
+                    const cell = newRow.insertCell(index);
+                    let cellValue = row[key];
 
-        if (
-          (tds[0] && tds[0].textContent.toLowerCase().includes(numberFilter) || numberFilter === '') &&
-          (tds[1] && tds[1].textContent.toLowerCase().includes(nameFilter) || nameFilter === '') &&
-          (tds[2] && tds[2].textContent.toLowerCase().includes(farmFilter) || farmFilter === '') &&
-          (tds[3] && tds[3].textContent.toLowerCase().includes(realHoursFilter) || realHoursFilter === '') &&
-          (tds[4] && tds[4].textContent.toLowerCase().includes(recordedHoursFilter) || recordedHoursFilter === '') &&
-          (tds[5] && compare(tds[5].textContent, differenceFilter, differenceComparison)) &&
-          (tds[6] && tds[6].textContent.toLowerCase().includes(column7Filter) || column7Filter === '')
-        ) {
-          display = '';
-        }
-          const col4 = tds[3] && Number(tds[3].textContent.trim()) === 0;
-        const col5 = tds[4] && Number(tds[4].textContent.trim()) === 0;
-        if (display === display && (col4 || col5)) {
-          display = display ;
-        }
-		if (display === '') {
-          totalHours4 += Number(tds[3] ? tds[3].textContent : 0);
-          totalHours5 += Number(tds[4] ? tds[4].textContent : 0);
-        }
-        rows[i].style.display = display;
-      }
-	  updateDataSummary(totalHours4, totalHours5);
+                    // Format date in column 8
+                    if (index === 7) { // Column 8 (0-based index 7)
+                        cellValue = formatDate(cellValue);
+                    }
+
+                    cell.textContent = cellValue;
+
+                    // Apply red color if value in column 6 is not zero
+                    if (index === 5) { // Column 6 (0-based index 5)
+                        if (parseInt(cellValue, 10) !== 0) {
+                            cell.classList.add('highlight');
+                        }
+                    }
+
+                    // If this is column 6 and its value is not 0, add the Edit button
+                    if (index === 5 && parseInt(row[key], 10) !== 0) {
+                        const editButton = document.createElement("button");
+                        editButton.textContent = "Edit";
+                        editButton.classList.add("edit-btn");
+                        editButton.onclick = function() {
+                            const cell1Value = newRow.cells[0].textContent.trim();
+                            const cell2Value = newRow.cells[7].textContent.trim();
+                            const url = `https://193.56.164.133:8443/ControlRoute/task/?q=${encodeURIComponent(cell1Value)}&initialValidate__range__gte=${encodeURIComponent(cell2Value)}&initialValidate__range__lte=${encodeURIComponent(cell2Value)}`;
+                            window.location.href = url;
+                        };
+                        cell.appendChild(editButton);
+                    }
+                });
+            });
+
+            // Update totals after data is loaded
+            updateTotals();
+
+            // Add event listeners to filter inputs
+            const filterInputs = document.querySelectorAll('.filter-input');
+            filterInputs.forEach((input, index) => {
+                input.addEventListener('input', () => {
+                    filterTable(index, input.value);
+                });
+            });
+
+            // Add event listener to filter select
+            const column6Filter = document.getElementById('column6Filter');
+            column6Filter.addEventListener('change', () => {
+                filterByValue(column6Filter.value);
+            });
+        })
+        .catch(error => console.error('Error fetching data:', error));
+
+    // Function to filter the table based on column and value
+    function filterTable(columnIndex, filterValue) {
+        const table = document.getElementById('dataTable');
+        const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+
+        Array.from(rows).forEach(row => {
+            const cell = row.getElementsByTagName('td')[columnIndex];
+            if (cell) {
+                const cellValue = cell.textContent.toLowerCase();
+                const isVisible = columnIndex === 5 
+                    ? (filterValue === 'less' ? parseInt(cellValue, 10) < 0 : filterValue === 'greater' ? parseInt(cellValue, 10) > 0 : cellValue.includes(filterValue.toLowerCase()))
+                    : cellValue.includes(filterValue.toLowerCase());
+
+                row.style.display = isVisible ? '' : 'none';
+            }
+        });
+
+        // Update totals after filtering
+        updateTotals();
     }
 
-    fetchData();
-  </script>
+    // Function to filter rows based on column 6 value
+    function filterByValue(condition) {
+        const table = document.getElementById('dataTable');
+        const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+
+        Array.from(rows).forEach(row => {
+            const cell = row.getElementsByTagName('td')[5]; // Column 6 (0-based index 5)
+            if (cell) {
+                const cellValue = parseFloat(cell.textContent) || 0;
+                const isVisible = condition === 'less' ? cellValue < 0 : condition === 'greater' ? cellValue > 0 : true;
+                row.style.display = isVisible ? '' : 'none';
+            }
+        });
+
+        // Update totals after filtering
+        updateTotals();
+    }
+
+// Toggle main dropdown
+document.querySelector('.dropbtn').addEventListener('click', function() {
+    var dropdownContent = document.getElementById('dayDropdown');
+    dropdownContent.style.display = (dropdownContent.style.display === 'block') ? 'none' : 'block';
+});
+
+// Toggle nested dropdown
+document.querySelector('.nested-dropbtn').addEventListener('click', function(event) {
+    event.stopPropagation(); // Prevent closing the main dropdown
+    var nestedDropdownContent = this.nextElementSibling;
+    nestedDropdownContent.style.display = (nestedDropdownContent.style.display === 'block') ? 'none' : 'block';
+});
+
+// Toggle sub-nested dropdown
+document.querySelector('.sub-nested-dropbtn').addEventListener('click', function(event) {
+    event.stopPropagation(); // Prevent closing the nested dropdown
+    var subNestedDropdownContent = this.nextElementSibling;
+    subNestedDropdownContent.style.display = (subNestedDropdownContent.style.display === 'block') ? 'none' : 'block';
+});
+
+// Close the dropdowns if the user clicks outside of them
+window.onclick = function(event) {
+    if (!event.target.matches('.dropbtn') && !event.target.matches('.nested-dropbtn') && !event.target.matches('.sub-nested-dropbtn')) {
+        var dropdowns = document.getElementsByClassName('dropdown-content');
+        for (var i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.style.display === 'block') {
+                openDropdown.style.display = 'none';
+            }
+        }
+        var nestedDropdowns = document.getElementsByClassName('nested-dropdown-content');
+        for (var j = 0; j < nestedDropdowns.length; j++) {
+            var openNestedDropdown = nestedDropdowns[j];
+            if (openNestedDropdown.style.display === 'block') {
+                openNestedDropdown.style.display = 'none';
+            }
+        }
+        var subNestedDropdowns = document.getElementsByClassName('sub-nested-dropdown-content');
+        for (var k = 0; k < subNestedDropdowns.length; k++) {
+            var openSubNestedDropdown = subNestedDropdowns[k];
+            if (openSubNestedDropdown.style.display === 'block') {
+                openSubNestedDropdown.style.display = 'none';
+            }
+        }
+    }
+}
+
+</script>
+
 </body>
 </html>
