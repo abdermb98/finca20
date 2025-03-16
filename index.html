@@ -185,15 +185,15 @@
 </head>
 <body>
   <div class="button-container">
-    <button id="takeScreenshot1" onclick="downloadExcel()">Envoyer</button>
+    <button id="takeScreenshot1" onclick="downloadExcel()"style="display: none;">Envoyer</button>
     <button id="takeScreenshot1" onclick="downloadExcel1()">Téléchargez Excel</button>
     <button id="downloadExcel" style="display: none;">Téléchargez Excel</button>
     <button id="takeScreenshot" style="display: none;">Téléchargez Image</button>
     <button id="takeScreenshot1" onclick="copyLink()">Copier le lien</button>
   </div>
-  <div style="text-align:center; margin: 20px;">
-    <strong>Heures totales: <span id="totalHours">0</span> H</strong> |
-    <strong>Nombre Total de ouvriers: <span id="rowCount">0</span> PRS</strong>
+  <div style="text-align:center; margin: 20px;display: none;">
+    <strong>Heures totales: <span id="totalHours">0</span> H</strong> 
+    <strong>Nombre Total de ouvriers: <span id="totalHours">0</span> PRS</strong>
   </div>
   <div id="result"></div>
   <div class="table-container">
@@ -203,10 +203,10 @@
         <th>MATRICULE</th>
         <th>NOMBRE</th>
         <th>EQUIPE</th>
-        <th>HOURS</th>
+        <th>POINTAGE</th>
+        <th>AGROTAREO</th>
+        <th>DIFFF</th>
         <th>DATE</th>
-        <th>FINCA</th>
-        <th>TRANSPORT</th>
         
       </tr>
     </thead>
@@ -325,11 +325,15 @@
                             let hours = parseFloat(cell) || 0;
                             totalHours += hours;
                             td.textContent = hours.toFixed(2);
+                        }else if (colIndex === 3) {  
+                            let hours = parseFloat(cell) || 0;
+                            totalHours += hours;
+                            td.textContent = hours.toFixed(2);
                         } else {
                             td.textContent = cell; 
                         }
 
-                        if (colIndex === 7 && cell === "NON") {
+                        if (colIndex === 5 && cell !== 0) {
                             tr.style.color = "red"; 
                             tr.style.fontSize = "20px";
                             tr.style.fontWeight = "bold"; 
