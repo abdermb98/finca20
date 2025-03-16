@@ -1,838 +1,656 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <title>POINTAGE</title>
-    <style>
-       body {
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    background-color: #e0f2f1;
-    margin: 0;
-    padding: 0;
-}
-
-
-header {
-    background-color: #004d40;
-    color: white;
-    padding: 20px;
-    text-align: center;
-    font-size: 28px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.container {
-    max-width: 1600px;
-    margin: 50px auto;
-    padding: 20px;
-    background-color: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-    border-radius: 20px;
-}
-
-th, td {
-    border: 1px solid #b2dfdb;
-    padding: 12px;
-    text-align: center;
-}
-
-th {
-    background-color: #047c68;
-    color: white;
-}
-
-
-
-.highlight {
-    background-color: #862f3c; /* Light red background */
-    color: #f3f3f3; /* Dark red text color */
-}
-
-.edit-btn {
-    background-color: #00796b;
-    color: white;
-    border: none;
-    padding: 2px 4px;
-    cursor: pointer;
-    border-radius: 6px;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    margin-left: 10px;
-}
-
-.edit-btn:hover {
-    background-color: #004d40;
-    transform: scale(1.05);
-}
-
-.filter-input, .filter-select {
-    width: calc(100% - 20px);
-    padding: 10px;
-    border: 1px solid #80cbc4;
-    border-radius: 6px;
-    margin-bottom: 0px;
-    background-color: #f9fbe7;
-    position: sticky;
-}
-
-.filter-select {
-    background-color: #ffffff;
-}
-
-.totals {
-    margin-bottom: 10px;
-    padding: 10px 20px;
-    background: linear-gradient(to right, #004d40, #00796b);
-    color: white;
-    border-radius: 12px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    display: flex;
-    justify-content: space-between;
-    font-size: 18px;
-    text-align: center;
-}
-
-.total-item {
-    margin-right: 20px;
-    display: inline-block;
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.total-item:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-.total-item:last-child {
-    margin-right: 0;
-}
-
-
-
-/* Change color of nested dropdown links on hover */
-.nested-dropdown-content a:hover {background-color: #ddd;}
-/* WhatsApp Button */
-.whatsapp-btn {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background-color: #25D366;
-        border: none;
-        border-radius: 50%;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        padding: 15px;
-        cursor: pointer;
-        z-index: 1000;
-        transition: background-color 0.3s ease;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>POINTAGE CAMPO</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
     }
 
-    .whatsapp-btn img {
-        width: 40px;
-        height: 40px;
+    h2 {
+      text-align: center;
+      margin-top: 20px;
+      color: #333;
     }
 
-    .whatsapp-btn:hover {
-        background-color: #128C7E;
+    table {
+      width: 80%;
+      margin: 20px auto;
+      border-collapse: collapse;
+      background-color: #fff;
     }
 
-    /* Modal */
+    th, td {
+      padding: 10px 15px;
+      text-align: left;
+      border: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #4a90e2;
+      color: white;
+    }
+
+    td {
+      background-color: #f9f9f9;
+    }
+
+    td button {
+      margin: 5px;
+      padding: 6px 12px;
+      font-size: 14px;
+      border: none;
+      cursor: pointer;
+    }
+
+    td button:hover {
+      opacity: 0.8;
+    }
+
+    .edit-button {
+     
+      background-color: #4a90e2;
+      color: white;
+    }
+
+    .delete-button {
+      background-color: #f44336;
+      color: white;
+    }
+
     .modal {
-        display: none; /* Hidden by default */
-        position: fixed;
-        z-index: 1001;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0, 0, 0, 0.4);
-        padding-top: 60px;
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.4);
     }
 
     .modal-content {
-        background-color: #fefefe;
-        margin: 5% auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 90%;
-        max-width: 600px;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .modal-content h2 {
-        margin-top: 0;
-        color: #004d40;
+      background-color: #fff;
+      margin: 15% auto;
+      padding: 20px;
+      border-radius: 5px;
+      width: 60%;
+      max-width: 500px;
     }
 
     .close {
-        color: #aaaaaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-        cursor: pointer;
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
     }
 
     .close:hover,
     .close:focus {
-        color: #000;
-        text-decoration: none;
+      color: #000;
+      text-decoration: none;
     }
 
-    label {
-        display: block;
-        margin-bottom: 8px;
-        font-weight: bold;
-        color: #004d40;
-    }
-    
-    select, input[type="date"], textarea,input {
-        width: 100%;
-        padding: 12px;
-        margin-bottom: 5px;
-        border: 1px solid #004d40;
-        border-radius: 40px;
-        box-sizing: border-box;
-        font-size: medium;
-        font-weight:bold ;
-        background-color: #f3f0f0;
-        text-align: center;
+    .modal form {
+      display: flex;
+      flex-direction: column;
     }
 
-    .BT11 {
-        background-color: #004d40;
-        color: #ffffff;
-        padding: 12px;
-        border: none;
-        border-radius: 40px;
-        cursor: pointer;
-        font-size: 16px;
-        transition: background-color 0.3s ease;
-        width: 100%;
+    .modal label {
+      margin-top: 10px;
+      font-weight: bold;
     }
 
-    textarea {
-        resize: vertical;
+    .modal select, .modal input {
+      margin-top: 10px;
+      font-weight: bold;
+      width: 99%;
+      padding: 5px;
+      border-radius: 4px;
     }
 
-    .checkbox-group {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 10px;
-        border-radius: 60px;
+    .modal input[type="text"],
+    .modal input[type="date"],
+    .modal input[type="number"] {
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
     }
 
-    .checkbox-group label {
-        font-weight:bold ;
-    }
- 
-
-    #downloadBtn {
-        position: fixed;
-        bottom: 20px;
-        left: 20px;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        background-color: #04090f; /* يمكنك تغيير اللون هنا */
-        color: rgb(156, 4, 4);
-        border: none;
-        font-size: 24px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-        z-index: 1000;
+    .modal button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #4a90e2;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 4px;
     }
 
-    #downloadBtn:hover {
-        background-color: #0056b3; /* لون الخلفية عند التمرير */
+    .modal button:hover {
+      background-color: #45a049;
     }
 
-    
-    nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: #00796b;
-            z-index: 1000;
-        }
+    .button-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
 
-        nav ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            justify-content: center; /* Center the menu */
-        }
+    #downloadExcel, #takeScreenshot, #takeScreenshot1 {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 10px;
+      font-size: 16px;
+      color: white;
+      background-color: #4a90e2;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
 
-        nav ul li {
-            position: relative;
-        }
+    #downloadExcel:hover, #takeScreenshot:hover, #takeScreenshot1:hover {
+      background-color: #45a049;
+    }
 
-        nav ul li a {
-            display: block;
-            padding: 15px;
-            color: white;
-            text-decoration: none;
-            font-weight: 900;
-        }
+    #downloadExcel:active, #takeScreenshot:active, #takeScreenshot1:active {
+      background-color: #397d3b;
+    }
 
-        nav ul li a:hover {
-            background: #004d40;
-        }
-
-        nav ul ul {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: #004d40;
-            min-width: 200px;
-            z-index: 1000;
-        }
-
-        nav ul ul li {
-            float: none;
-            border-top: 1px solid #555;
-        }
-
-        nav ul ul li a {
-            padding: 10px;
-            color: white;
-        }
-
-        nav ul ul ul {
-            left: 100%;
-            top: 0;
-        }
-
-        nav ul li:hover > ul {
-            display: block;
-        }
-
-        
-        /* Modal333 styling */
-        .Modal333 {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.4);
-            justify-content: center;
-            align-items: center;
-        }
-
-        .Modal333-content {
-            background-color: white;
-            padding: 20px;
-            border-radius: 5px;
-            width: 300px;
-            text-align: center;
-        }
-
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .Modal333 input {
-            width: 80%;
-            padding: 10px;
-            margin: 10px;
-            border-radius: 10px;
-            
-        }
-
-        .Modal333 button {
-            padding: 10px 20px;
-            background-color: #004d40;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 10px;
-        }
-        td:nth-child(7), th:nth-child(7) {
-            width: 0px; /* يمكنك تعديل القيمة بحسب العرض المطلوب */
-        }
-
-        td.highlight {
-    background-color: #ff6f61; /* لون برتقالي دافئ */
-    color: #fff;
-    position: relative;
-    animation: highlightPulse 2s infinite, highlightGlow 3s infinite;
+    #downloadExcel {
+      margin-right: 20px;
+    }
+    .table-container {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: auto;
 }
 
-@keyframes highlightPulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
+.highlight {
+    background-color: red; /* تلوين السطر باللون الأحمر */
 }
 
-@keyframes highlightGlow {
-    0% { box-shadow: 0 0 8px rgba(255, 105, 97, 0.6); }
-    100% { box-shadow: 0 0 16px rgba(255, 105, 97, 0.8); }
-}
 
-td.highlight .warning-icon {
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-    color: #fff;
-    font-size: 1.2em;
-}
-
-        
-    </style>
+  </style>
 </head>
 <body>
-  <button id="downloadBtn">
-    &#128190; <!-- رمز القرص الصلب، يمكنك تغييره حسب رغبتك -->
-</button>
-<nav>
-    <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Descuadrage</a>
-            <ul>
-                <li><a href="https://aromaherbex.github.io/LUNDI/">LUNDI</a></li>
-                <li><a href="https://aromaherbex.github.io/MARDI/">MARDI</a></li>
-                <li><a href="https://aromaherbex.github.io/MERCREDI/">MERCEREDI</a></li>
-                <li><a href="https://aromaherbex.github.io/JEUDI/">JEUDI</a></li>
-                <li><a href="https://aromaherbex.github.io/VENDREDI/">VENDREDI</a></li>
-                <li><a href="https://aromaherbex.github.io/SAMEDI/">SAMEDI</a></li>
-                <li><a href="https://aromaherbex.github.io/DIMANCHE/">DRMANCHE</a></li>
-                
-            </ul>
-        </li>
-        <li><a href="#">Pointage manuel</a>
-            <ul>
-                <li><a href="#" onclick="openModal333('FINCA 01', 'https://aromaherbex.github.io/F1/', 'd1')">FINCA 01</a></li>
-                <li><a href="#" onclick="openModal333('FINCA 02', 'https://aromaherbex.github.io/F2/', 'd2')">FINCA 02</a></li>
-                <li><a href="#" onclick="openModal333('FINCA 03', 'https://aromaherbex.github.io/F3/', 'd3')">FINCA 03</a></li>
-                <li><a href="#" onclick="openModal333('FINCA 04', 'https://aromaherbex.github.io/F4/', 'd4')">FINCA 04</a></li>
-                <li><a href="#" onclick="openModal333('FINCA 05', 'https://aromaherbex.github.io/F5/', 'd5')">FINCA 05</a></li>
-                <li><a href="#" onclick="openModal333('FINCA 06', 'https://aromaherbex.github.io/F6/', 'd6')">FINCA 06</a></li>
-                <li><a href="#" onclick="openModal333('FINCA 08', 'https://aromaherbex.github.io/F8/', 'd8')">FINCA 08</a></li>
-                <li><a href="#" onclick="openModal333('FINCA 09', 'https://aromaherbex.github.io/F9/', 'd9')">FINCA 09</a></li>
-                <li><a href="#" onclick="openModal333('FINCA 13', 'https://aromaherbex.github.io/F13/', 'd13')">FINCA 13</a></li>
-                <li><a href="#" onclick="openModal333('FINCA 19', 'https://aromaherbex.github.io/F19/', 'd19')">FINCA 19</a></li>
-                <li><a href="#" onclick="openModal333('FINCA 20', 'https://aromaherbex.github.io/F20/', 'd20')">FINCA 20</a></li>
-                <li><a href="#" onclick="openModal333('FINCA 21', 'https://aromaherbex.github.io/F21/', 'd21')">FINCA 21</a></li>
-                <li><a href="#" onclick="openModal333('FINCA 21', 'https://aromaherbex.github.io/F22/', 'd22')">FINCA 22</a></li>
-                
-            </ul>
-        </li>
-        <li><a href="https://193.56.164.133:8443/reportes/Reporte/?key=Partes_Rendimientos">Rendement</a></li>
-        <li><a href="https://193.56.164.133:8443/reportes/Reporte/?key=Marcheting">Rendement de tracteur</a></li>
-        <li><a href="https://193.56.164.133:8443/ControlRoute/task/">Access Taches</a></li>
-        <li><a href="https://193.56.164.133:8443/Tareo/productivity_log/">productivite</a></li>
-        <li><a href="https://193.56.164.133:8443/Tareo/machinerymarking/">Modifier rnd tracteur</a></li>
-	<li><a href="https://aromaherbex.github.io/R20/">Rendement manuel</a></li>
-        
-        
-    </ul>
-</nav>
-
-
- 
-<div class="container">
-   
-<div class="totals">
-    <span class="total-item">TOTAL H AGROTAREO: <span id="totalColumn4">...</span></span>
-    <span class="total-item">TOTAL H POINTAGE: <span id="totalColumn5">...</span></span>
-    <span class="total-item">DIFFERENCE: <span id="totalColumn56">...</span></span>
-    <span class="total-item">PERCENTAGE: <span id="totalColumn567">...</span></span>
-
-</div>
-
-<table id="dataTable">
-    <thead>
-        <tr>
-            <th id="2027"><input type="text" class="filter-input" placeholder="MATRICULE"></th>
-            <th><input type="text" class="filter-input" placeholder="NOMBRE"></th>
-            <th><input type="text" class="filter-input" placeholder="EQUIPE"></th>
-            <th><input type="text" class="filter-input" placeholder="AGROTAREO"></th>
-            <th><input type="text" class="filter-input" placeholder="RHHH"></th>
-            <th>
-                <input type="text" class="filter-input" placeholder="DIFFERENCE">
-                
-                    <select class="filter-select" id="column6Filter">
-                        <option value="">All</option>
-                        <option value="less">Less</option>
-                        <option value="greater">Greater</option>
-                    </select>
-                
-            </th>
-            <th><input type="text" class="filter-input" placeholder="FINCA"></th>
-            <th><input type="text" class="filter-input" placeholder="DATE"></th>
-            
-        </tr>
-    </thead>
-    <tbody>
-        <!-- Data will be loaded here -->
-    </tbody>
-</table>
-<div class="whatsapp-btn" onclick="openModal()">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/2048px-WhatsApp.svg.png" alt="WhatsApp">
-</div>
-
-<!-- Modal -->
-<div id="myModal" class="modal">
-  <div class="modal-content">
-      <span class="close" onclick="closeModal()">&times;</span>
-      <h2>Envoyer des informations</h2>
-      <form id="modalForm">
-          <label for="dateModal">FINCA :</label>
-          <input type="number" id="finca11" />
-          <label for="dateModal">DATE :</label>
-          <input type="date" id="date11" >
-          <div class="checkbox-group">
-              <label><input type="checkbox" id="person1Modal" name="destinataire" value="person1"> HICHAM</label>
-              <label><input type="checkbox" id="person2Modal" name="destinataire" value="person2"> IBRAHIM</label>
-          </div>
-          
-          
-          <label for="messageModal">Message :</label>
-          <textarea id="messageModal" name="message" rows="4" required></textarea>
-       
-          <button type="button11" class="BT11" onclick="sendToWhatsApp()">Envoyer sur WhatsApp</button>
-      </form>
+  <div class="button-container">
+    <button id="takeScreenshot1" onclick="downloadExcel()">Envoyer</button>
+    <button id="takeScreenshot1" onclick="downloadExcel1()">Téléchargez Excel</button>
+    <button id="downloadExcel" style="display: none;">Téléchargez Excel</button>
+    <button id="takeScreenshot" style="display: none;">Téléchargez Image</button>
+    <button id="takeScreenshot1" onclick="copyLink()">Copier le lien</button>
   </div>
+  <div style="text-align:center; margin: 20px;">
+    <strong>Heures totales: <span id="totalHours">0</span> H</strong> |
+    <strong>Nombre Total de ouvriers: <span id="rowCount">0</span> PRS</strong>
+  </div>
+  <div id="result"></div>
+  <div class="table-container">
+  <table id="dataTable">
+    <thead>
+      <tr>
+        <th>MATRICULE</th>
+        <th>NOMBRE</th>
+        <th>EQUIPE</th>
+        <th>HOURS</th>
+        <th>DATE</th>
+        <th>FINCA</th>
+        <th>TRANSPORT</th>
+        
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
 </div>
-<div id="myModal333" class="Modal333">
-    <div class="Modal333-content">
-        <span class="close" onclick="closeModal333()">&times;</span>
-        <p id="Modal333-title"></p>
-        <input type="password" id="password" placeholder="Entrez votre mot de passe">
-        <button onclick="submitPassword()">Submit</button>
-    </div>
-</div>
-<script>
-
-     function closeModal333() {
-        document.getElementById("myModal333").style.display = "none";
-    }
-     let correctPassword = '';
-     
-    let redirectUrl = '';
-
-    // Function to open the Modal333
-    function openModal333(fincaName, url, password) {
-        document.getElementById('myModal333').style.display = 'flex';
-        document.getElementById('Modal333-title').innerText = fincaName;
-        correctPassword = password;
-        redirectUrl = url;
-    }
-
-    // Close the Modal333 when the close button is clicked
-    
-
-    // Function to submit the password
-    function submitPassword() {
-        const enteredPassword = document.getElementById('password').value;
-
-        if (enteredPassword === correctPassword) {
-            window.location.href = redirectUrl;
-        } else {
-            alert('mot de passe incorrect!');
-        }
-    }
-
-    // Close the Modal333 when clicking outside of it
-    window.onclick = function(event) {
-        if (event.target == document.getElementById('myModal333')) {
-            document.getElementById('myModal333').style.display = 'none';
-        }
-    };
-    
-
-    // URL of the Google Apps Script web app
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbxBNd_8mJ37PaLk0Tt8N42t-7hlcgfvcCC0P9K4rCbQzqcESugQUTz68c0oOOR_Plo/exec';
-
-    // Function to format date to YYYY-MM-DD
-    function formatDate(dateString) {
-        const dateObj = new Date(dateString);
-        const day = dateObj.getDate();
-        const month = String(dateObj.getMonth() + 1).padStart(2, '0');
-        const year = dateObj.getFullYear();
-        return `${year}-${month}-${day}`;
-    }
-
-    // Function to update totals and difference
-    function updateTotals() {
-    const table = document.getElementById('dataTable');
-    const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
-    
-    
-    let totalColumn4 = 0;
-    let totalColumn5 = 0;
-    let totalColumn56 = 0;
-    
-
-    Array.from(rows).forEach(row => {
-        if (row.style.display !== 'none') { // Only include visible rows
-            const cell4 = row.getElementsByTagName('td')[3]; // 4th column (index 3)
-            const cell5 = row.getElementsByTagName('td')[4]; // 5th column (index 4)
-            const cell56 = row.getElementsByTagName('td')[5]; // 6th column (index 5)
-
-            if (cell4) {
-                totalColumn4 += parseFloat(cell4.textContent) || 0;
-            }
-            if (cell5) {
-                totalColumn5 += parseFloat(cell5.textContent) || 0;
-            }
-            if (cell56) {
-                totalColumn56 += parseFloat(cell56.textContent) || 0;
-            }
-            
-        }
-    });
-    var finca1 = table.rows[3].cells[6].innerText;
-      var date1 = table.rows[3].cells[7].innerText;
-   
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
       
-    const percentageDifference = ((totalColumn4 / totalColumn5) * 100 - 100).toFixed(2);
-    document.getElementById('totalColumn4').textContent = totalColumn4.toFixed(1) + " H";
-    document.getElementById('totalColumn5').textContent = totalColumn5 + " H"; // Display the row count where value > 0
-    document.getElementById('totalColumn56').textContent = totalColumn56 + " H";
-    document.getElementById('totalColumn567').textContent = percentageDifference + " %";
-    document.getElementById('heur').value = totalColumn4.toFixed(2) + " H";
-    document.getElementById('prs').value = totalColumn5.toFixed(0) + " PRS";
-    finca11.value = `${finca1}`;
-    date11.value = `${date1}`;
-      window.onload=updateTotals;
+      <form id="updateForm">
+        <label for="matricule">MATRICULE:</label>
+        <input type="text" id="matricule" name="matricule" required><br>
+
+        <label for="nombre">NOMBRE:</label>
+        <input type="text" id="nombre" name="nombre" required><br>
+
+        <label for="equipe">EQUIPE:</label>
+        <select id="equipe" name="equipe" class="form-control" required></select><br>
+
+        <label for="hours">HOURS:</label>
+        <input type="number" id="hours" name="hours" required><br>
+
+        <label for="date">DATE:</label>
+        <input type="text" id="date" name="date"><br>
+
+        <label for="finca">FINCA:</label>
+        <input type="text" id="finca" name="finca" readonly><br>
+
+        <label for="situation">SITUATION:</label>
+        <input type="text" id="situation" name="situation" required><br>
+
+        <button type="button" onclick="updateData()">Mettre à jour</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="confirmationModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeConfirmationModal()">&times;</span>
+      <p>Êtes-vous sûr de vouloir supprimer cette Tache?</p>
+      <button id="confirmDeleteButton" class="delete-button">Confirmer</button>
+      <button onclick="closeConfirmationModal()" class="edit-button">Annuler</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas/dist/html2canvas.min.js"></script>
+  <script>
+    fetch('https://script.google.com/macros/s/AKfycbyf8ohW59AWEcQM3qqu-OC-RXarY-sh1G-voALH5AuRjEbj0lT2eiPU6IGXhlHBfpf5/exec')
+      .then(response => response.json())
+      .then(data => {
+        const comboBox = document.getElementById('equipe');
+        data.forEach(item => {
+          const option = document.createElement('option');
+          option.value = item;
+          option.textContent = item;
+          comboBox.appendChild(option);
+        });
+      });
+
+    var confirmationModal = document.getElementById("confirmationModal");
+    var confirmDeleteButton = document.getElementById("confirmDeleteButton");
+    let rowToDeleteIndex = null;
+
+    function showConfirmationModal(index) {
+      rowToDeleteIndex = index; 
+      confirmationModal.style.display = "block";
+    }
+
+    function closeConfirmationModal() {
+      confirmationModal.style.display = "none";
+      rowToDeleteIndex = null; 
+    }
+
+    confirmDeleteButton.onclick = function() {
+      if (rowToDeleteIndex !== null) {
+        deleteRow(rowToDeleteIndex); 
+        closeConfirmationModal(); 
+      }
+    };
+
+    const webAppUrl = "https://script.google.com/macros/s/AKfycbyf8ohW59AWEcQM3qqu-OC-RXarY-sh1G-voALH5AuRjEbj0lT2eiPU6IGXhlHBfpf5/exec"; 
+
+    var modal = document.getElementById("myModal");
+    var span = document.getElementsByClassName("close")[0];
+
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+
+    function loadData() {
+    fetch(webAppUrl + '?action=getData')
+        .then(response => response.json())
+        .then(data => {
+            let tableBody = document.getElementById("dataTable").getElementsByTagName("tbody")[0];
+            tableBody.innerHTML = '';  
+
+            let totalHours = 0;
+            let rowCount = 0;
+
+            data.forEach(function(row, index) {
+                if (row[1] !== "N 10") {
+                    let tr = document.createElement("tr");
+
+                    row.forEach(function(cell, colIndex) {
+                        let td = document.createElement("td");
+
+                        if (colIndex === 6) {  
+                            let date = new Date(cell);
+                            let day = String(date.getDate()).padStart(2, '0');
+                            let month = String(date.getMonth() + 1).padStart(2, '0');
+                            let year = date.getFullYear();
+                            td.textContent = `${day}/${month}/${year}`;  
+                        } else if (colIndex === 4) {  
+                            let hours = parseFloat(cell) || 0;
+                            totalHours += hours;
+                            td.textContent = hours.toFixed(2);
+                        } else {
+                            td.textContent = cell; 
+                        }
+
+                        if (colIndex === 7 && cell === "NON") {
+                            tr.style.color = "red"; 
+                            tr.style.fontSize = "20px";
+                            tr.style.fontWeight = "bold"; 
+                        }
+                        if (colIndex === 7) {
+                            td.style.display = "none";  
+                        }
+                        tr.appendChild(td);
+                    });
+
+                    let tdActions = document.createElement("td");
+                    let editButton = document.createElement("button");
+
+                    editButton.textContent = "Modifier";
+                    editButton.classList.add("edit-button");
+                    editButton.onclick = function() {
+                        const cell1Value = tr.cells[0].textContent.trim();
+                        const cell2Value = tr.cells[6].textContent.trim();
+                        const url = `https://herbexat.hispatec.com:8443/ControlRoute/task/?q=${encodeURIComponent(cell1Value)}&initialValidate__range__gte=${encodeURIComponent(cell2Value)}&initialValidate__range__lte=${encodeURIComponent(cell2Value)}`;
+                        window.location.href = url;
+                    };
+
+                    tdActions.appendChild(editButton);
+                    tr.appendChild(tdActions);
+                    tableBody.appendChild(tr);
+
+                    rowCount++;
+                }
+            });
+
+            document.getElementById("totalHours").textContent = totalHours.toFixed(2);
+            document.getElementById("rowCount").textContent = rowCount;
+        });
 }
 
 
 
-    // Fetch data from Google Sheets
-    fetch(scriptURL)
+
+function openModal(index, row) {
+    document.getElementById("matricule").value = row[0]; 
+    document.getElementById("nombre").value = row[1]; 
+    document.getElementById("equipe").value = row[2];
+    document.getElementById("hours").value = row[3]; 
+    
+    
+    let date = new Date(row[4]);
+    date.setMinutes(date.getMinutes() - date.getTimezoneOffset()); 
+    document.getElementById("date").value = date.toISOString().split('T')[0]; 
+    
+    document.getElementById("finca").value = row[5]; 
+    document.getElementById("situation").value = row[6];
+    modal.style.display = "block";
+    
+    window.currentRowIndex = index;
+}
+
+function updateData() {
+    const matricule = document.getElementById("matricule").value;
+    const nombre = document.getElementById("nombre").value;
+    const equipe = document.getElementById("equipe").value;
+    const hours = document.getElementById("hours").value;
+    const date = document.getElementById("date").value;
+    const finca = document.getElementById("finca").value;
+    const situation = document.getElementById("situation").value;
+
+    fetch(webAppUrl + '?action=updateData&index=' + window.currentRowIndex + '&matricule=' + matricule + '&nombre=' + nombre + '&equipe=' + equipe + '&hours=' + hours + '&date=' + date + '&finca=' + finca + '&situation=' + situation)
         .then(response => response.json())
         .then(data => {
-            console.log('Data fetched successfully:', data); // Log the fetched data
-
-            const tableBody = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
-
-            // Clear existing rows if any
-            tableBody.innerHTML = '';
-
-            data.forEach(row => {
-                const newRow = tableBody.insertRow();
-
-                Object.keys(row).forEach((key, index) => {
-                    const cell = newRow.insertCell(index);
-                    let cellValue = row[key];
-
-                    // Format date in column 8
-                    if (index === 7) { 
-                        cellValue = formatDate(cellValue);
-                    }
-                    
-                    cell.textContent = cellValue;
-                    
-                    
-                    
-                    // Apply red color if value in column 6 is not zero
-                    
-
-                    // If this is column 6 and its value is not 0, add the Edit button
-                    if (index === 5 && parseInt(row[key], 10) != 0) {
-                        const editButton = document.createElement("button");
-                        
-                        editButton.className = 'icon-button';
-                        editButton
-                        editButton.innerHTML = '<i class="fas fa-pencil-alt"></i>';
-                        editButton.classList.add("edit-btn");
-                        editButton.style.background = 'none';
-                        editButton.style.border = 'none';
-                        editButton.style.fontSize = '15px';
-                        editButton.style.margin = '5px';
-                        cell.style.backgroundColor='#FBC2B8'
-                        editButton.style.cursor = 'pointer';
-                        editButton.style.color = '#004d40';  // Example color
-
-// Add hover effect using JavaScript (not recommended for complex styles)
-                        editButton.addEventListener('mouseover', () => {
-                        editButton.style.color = '#00796b';  // Hover color
-                       });
-                        editButton.addEventListener('mouseout', () => {
-                        editButton.style.color = '#004d40';  // Original color
-                        });
-                        
-
-                        editButton.onclick = function() {
-                            const cell1Value = newRow.cells[0].textContent.trim();
-                            const cell2Value = newRow.cells[7].textContent.trim();
-                            const url = `https://193.56.164.133:8443/ControlRoute/task/?q=${encodeURIComponent(cell1Value)}&initialValidate__range__gte=${encodeURIComponent(cell2Value)}&initialValidate__range__lte=${encodeURIComponent(cell2Value)}`;
-                            window.location.href = url;
-                        };
-                        cell.appendChild(editButton);
-                        
-                    }
-                });
-            });
-
-            // Update totals after data is loaded
-            updateTotals();
-
-            // Add event listeners to filter inputs
-            const filterInputs = document.querySelectorAll('.filter-input');
-            filterInputs.forEach((input, index) => {
-                input.addEventListener('input', () => {
-                    filterTable(index, input.value);
-                });
-            });
-
-            // Add event listener to filter select
-            const column6Filter = document.getElementById('column6Filter');
-            column6Filter.addEventListener('change', () => {
-                filterByValue(column6Filter.value);
-            });
+            if (data.status === 'success') {
+                modal.style.display = "none"; 
+                loadData(); 
+            } else {
+                alert("Erreur de mise à jour des données !");
+            }
         })
-        .catch(error => console.error('Error fetching data:', error));
-
-    // Function to filter the table based on column and value
-    function filterTable(columnIndex, filterValue) {
-        const table = document.getElementById('dataTable');
-        const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
-
-        Array.from(rows).forEach(row => {
-            const cell = row.getElementsByTagName('td')[columnIndex];
-            if (cell) {
-                const cellValue = cell.textContent.toLowerCase();
-                const isVisible = columnIndex === 5 
-                    ? (filterValue === 'less' ? parseInt(cellValue, 10) < 0 : filterValue === 'greater' ? parseInt(cellValue, 10) > 0 : cellValue.includes(filterValue.toLowerCase()))
-                    : cellValue.includes(filterValue.toLowerCase());
-
-                row.style.display = isVisible ? '' : 'none';
-            }
+        .catch(error => {
+            alert("Erreur lors de la mise à jour !");
+            console.error("Update error: ", error);
         });
+}
+function highlightRows() {
+    var table = document.getElementById("dataTable");
+    var rows = table.getElementsByTagName("tr");
 
-        // Update totals after filtering
-        updateTotals();
+    for (var i = 1; i < rows.length; i++) { // بدءًا من الصف الأول (تخطي العنوان)
+        var cells = rows[i].getElementsByTagName("td");
+        var situationCell = cells[7]; // تأكد من أن العمود 3 هو عمود SITUATION (والذي يعد الرقم 4 من اليسار)
+
+        if (situationCell && situationCell.innerText.trim() === "NON") {
+            rows[i].classList.add("highlight"); // إضافة الفئة لتلوين السطر
+        }
     }
+}
 
-    // Function to filter rows based on column 6 value
-    function filterByValue(condition) {
-        const table = document.getElementById('dataTable');
-        const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+// استدعاء الدالة بعد تحميل الصفحة
+window.onload = highlightRows;
 
-        Array.from(rows).forEach(row => {
-            const cell = row.getElementsByTagName('td')[5]; // Column 6 (0-based index 5)
-            if (cell) {
-                const cellValue = parseFloat(cell.textContent) || 0;
-                const isVisible = condition === 'less' ? cellValue < 0 : condition === 'greater' ? cellValue > 0 : true;
-                row.style.display = isVisible ? '' : 'none';
-            }
+
+
+    function deleteRow(index) {
+      fetch(webAppUrl + '?action=deleteData&index=' + index)
+        .then(response => response.json())
+        .then(data => {
+          if (data.status === 'success') {
+            loadData();
+          } else {
+            loadData();
+            alert("c ok!");
+            
+          }
         });
-
-        // Update totals after filtering
-        updateTotals();
     }
 
-    function openModal() {
-        document.getElementById("myModal").style.display = "block";
+    function copyLink() {
+      const link = window.location.href;
+      navigator.clipboard.writeText(link).then(() => {
+        alert('Lien copié dans le presse-papiers!');
+      }).catch(err => {
+        console.error('Erreur lors de la copie du lien:', err);
+      });
     }
 
-    // Close the modal
-    function closeModal() {
-        document.getElementById("myModal").style.display = "none";
-    }
-	
-
-    // Send message via WhatsApp
-    function sendToWhatsApp() {
-        var finca11 = document.getElementById("finca11").value;
-        var date11 = document.getElementById("date11").value;
-        var message = document.getElementById("messageModal").value;
-        
-        
-        var phoneNumbers = [];
-        if (document.getElementById("person1Modal").checked) {
-            phoneNumbers.push("+212666043724"); // Numéro de téléphone pour la personne 1
-        }
-        if (document.getElementById("person2Modal").checked) {
-            phoneNumbers.push("+212663715065"); // Numéro de téléphone pour la personne 2
-        }
-
-        var fullMessage = `FERME AGADIR *${finca11}*\n\nDATE : *${date11}*\n\n Le nombre d'heures dans Poinage correspond au nombre d'heures dans Agrotareo.*(${message})*`;
-
-        if (phoneNumbers.length > 0) {
-            for (var i = 0; i < phoneNumbers.length; i++) {
-                (function(i) {
-                    setTimeout(function() {
-                        var whatsappURL = `https://wa.me/${phoneNumbers[i]}?text=${encodeURIComponent(fullMessage)}`;
-                        window.open(whatsappURL, '_blank');
-                    }, i * 1000); // Délai de 1 seconde entre chaque envoi
-                })(i);
-            }
-            // Clear the form after sending
-            document.getElementById("modalForm").reset();
-            closeModal(); // Close the modal after sending
-        } else {
-            alert("Veuillez sélectionner au moins une personne.");
-        }
-    }
-    document.getElementById('downloadBtn').addEventListener('click', function () {
-    // تحديد الجدول من HTML
-    var table = document.getElementById('dataTable');
+    function exportTableToExcel() {
+    const table = document.getElementById('dataTable');
     
-    // الحصول على القيمة من الخلية في العمود 6 من الصف الأول
-    var fileName = table.rows[2].cells[4].innerText + "  (" + table.rows[2].cells[5].innerText+")"  || 'default_name';  
+    if (!table) {
+        console.error("Table with ID 'dataTable' not found.");
+        return;
+    }
+    
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const yyyy = today.getFullYear();
+    const dateStr = `${dd}-${mm}-${yyyy}`;
+    const filename = `POINTAGE_${dateStr}.xlsx`;
 
-    // إنشاء الكتاب
-    var wb = XLSX.utils.table_to_book(table, {sheet: "POINTAGE F20"});
-    var wbout = XLSX.write(wb, {bookType: 'xlsx', type: 'binary'});
+    const workbook = XLSX.utils.table_to_book(table, {
+        sheet: "PONTAGE",
+        raw: true,
+    });
 
-    function s2ab(s) { 
-        var buf = new ArrayBuffer(s.length);
-        var view = new Uint8Array(buf);
-        for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
-        return buf;    
+    const sheet = workbook.Sheets["PONTAGE"];
+    
+   
+    if (sheet && sheet["!ref"]) {
+        const range = XLSX.utils.decode_range(sheet["!ref"]);
+        
+        for (let col = range.s.c; col <= range.e.c; col++) {
+            for (let row = range.s.r + 1; row <= range.e.r; row++) {
+                const cellAddress = XLSX.utils.encode_cell({ r: row, c: col });
+                const cell = sheet[cellAddress];
+                if (cell && cell.t === "s" && /\d{2}-\d{2}-\d{4}/.test(cell.v)) {
+                    cell.t = "s";
+                    cell.v = cell.v;
+                }
+            }
+        }
+    } else {
+        console.error("La feuille 'PONTAGE' est manquante ou n'a pas de plage valide.");
+        return;
     }
 
-    // إنشاء Blob وتحميل الملف
-    var blob = new Blob([s2ab(wbout)], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
-    var url = URL.createObjectURL(blob);
-    var downloadLink = document.createElement('a');
-    downloadLink.href = url;
-    downloadLink.download = fileName + '.xlsx';  
-    document.body.appendChild(downloadLink);
-    downloadLink.click();
-    document.body.removeChild(downloadLink);
-    URL.revokeObjectURL(url);
-});
+    XLSX.writeFile(workbook, filename);
+}
 
 
-</script>
 
+      function takeScreenshot() {
+        const table = document.getElementById('dataTable');
+        html2canvas(table).then(canvas => {
+          const link = document.createElement('a');
+          link.download = 'POINTAGE F20.png';
+          link.href = canvas.toDataURL();
+          link.click();
+        }).catch(error => console.error('Error:', error));
+      }
+
+      document.getElementById('downloadExcel').addEventListener('click', exportTableToExcel);
+      document.getElementById('takeScreenshot').addEventListener('click', takeScreenshot);
+      document.addEventListener('DOMContentLoaded', loadData);
+
+    loadData(); 
+    
+    function downloadExcel() {
+    fetch(webAppUrl + '?action=getData')
+        .then(response => response.json())
+        .then(data => {
+            
+            let filteredData = data
+                .filter(row => row[5] === "N 10")
+                .map(row => [row[0], row[1], row[2], row[3], row[4], row[6]]);
+
+            if (filteredData.length < 2) {
+                alert("PAS DES DONNEES");
+                return;
+            }
+
+            let rawDate = filteredData[1][0]; 
+            let formattedDate = formatDate(rawDate);
+
+            let headers = ["FECHA", "ENCARGADO", "C.TRAB", "NOMBRE", "HORAS", "MATRICULE"];
+
+            let ws = XLSX.utils.aoa_to_sheet([headers, ...filteredData]);
+
+            ws['!autofilter'] = { ref: `A1:F${filteredData.length + 1}` };
+
+            let colWidths = headers.map((_, colIndex) => ({
+                wch: Math.max(
+                    ...filteredData.map(row => (row[colIndex] ? row[colIndex].toString().length : 10)),
+                    headers[colIndex].length
+                ) + 2
+            }));
+            ws['!cols'] = colWidths;
+
+            let wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Données");
+
+            let wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+            let blob = new Blob([wbout], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+
+            let fileName = `PointageN10.xlsx`;
+            let link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = fileName;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(link.href); 
+
+            sendToTelegram(blob, fileName);
+        })
+        .catch(error => {
+            console.error("Erreur lors de la récupération des données :", error);
+            alert("Une erreur est survenue lors du téléchargement des données.");
+        });
+}
+
+function downloadExcel1() {
+    fetch(webAppUrl + '?action=getData')
+        .then(response => response.json())
+        .then(data => {
+            
+            let filteredData = data
+                .filter(row => row[5] === "N 10")
+                .map(row => [formatDate(row[0]), row[1], row[2], row[3], row[4], row[6]]);
+
+            if (filteredData.length < 1) {
+                alert("PAS DES DONNEES");
+                return;
+            }
+
+            let rawDate = filteredData[1][0]; 
+            let formattedDate = formatDate(rawDate);
+
+            let headers = ["FECHA", "ENCARGADO", "C.TRAB", "NOMBRE", "HORAS", "MATRICULE"];
+
+            let ws = XLSX.utils.aoa_to_sheet([headers, ...filteredData]);
+
+            ws['!autofilter'] = { ref: `A1:F${filteredData.length + 1}` };
+
+            let colWidths = headers.map((_, colIndex) => ({
+                wch: Math.max(
+                    ...filteredData.map(row => (row[colIndex] ? row[colIndex].toString().length : 10)),
+                    headers[colIndex].length
+                ) + 2
+            }));
+            ws['!cols'] = colWidths;
+
+            let wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Données");
+
+            let wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+            let blob = new Blob([wbout], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+
+            let fileName = `PointageN10.xlsx`;
+            let link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = fileName;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(link.href); 
+
+            
+        })
+        .catch(error => {
+            console.error("Erreur lors de la récupération des données :", error);
+            alert("Une erreur est survenue lors du téléchargement des données.");
+        });
+}
+function formatDate(rawDate) {
+    if (!rawDate) return "";
+    let date = new Date(rawDate);
+    if (isNaN(date.getTime())) return rawDate; 
+
+    let day = String(date.getDate()).padStart(2, '0');
+    let month = String(date.getMonth() + 1).padStart(2, '0');
+    let year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+}
+
+
+function sendToTelegram(fileBlob, fileName) {
+    let botToken = "8048744049:AAGAJaZZWkcheV7ETUGjJEmMtHjPMQJb5qk";
+    let chatId = "6928955938";
+
+    let formData = new FormData();
+    formData.append("chat_id", chatId);
+    formData.append("document", fileBlob, fileName);
+
+    fetch(`https://api.telegram.org/bot${botToken}/sendDocument`, {
+        method: "POST",
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => console.log("c ok:", data))
+    .catch(error => console.error("errour:", error));
+}
+
+
+  </script>
 </body>
 </html>
