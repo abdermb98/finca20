@@ -256,7 +256,7 @@
   <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/html2canvas/dist/html2canvas.min.js"></script>
   <script>
-    fetch('https://script.google.com/macros/s/AKfycbyf8ohW59AWEcQM3qqu-OC-RXarY-sh1G-voALH5AuRjEbj0lT2eiPU6IGXhlHBfpf5/exec')
+    fetch('https://script.google.com/macros/s/AKfycbzBujnQErip16iN-wiID8U8OALcZnsfJy0c0zngk1sMJj8cU_W0-wQqY0vD9rZv_YCz/exec')
       .then(response => response.json())
       .then(data => {
         const comboBox = document.getElementById('equipe');
@@ -289,7 +289,7 @@
       }
     };
 
-    const webAppUrl = "https://script.google.com/macros/s/AKfycbyf8ohW59AWEcQM3qqu-OC-RXarY-sh1G-voALH5AuRjEbj0lT2eiPU6IGXhlHBfpf5/exec"; 
+    const webAppUrl = "https://script.google.com/macros/s/AKfycbzBujnQErip16iN-wiID8U8OALcZnsfJy0c0zngk1sMJj8cU_W0-wQqY0vD9rZv_YCz/exec"; 
 
     var modal = document.getElementById("myModal");
     var span = document.getElementsByClassName("close")[0];
@@ -315,13 +315,9 @@
                     row.forEach(function(cell, colIndex) {
                         let td = document.createElement("td");
 
-                        if (colIndex === 6) {  
-                            let date = new Date(cell);
-                            let day = String(date.getDate()).padStart(2, '0');
-                            let month = String(date.getMonth() + 1).padStart(2, '0');
-                            let year = date.getFullYear();
-                            td.textContent = `${day}/${month}/${year}`;  
-                        } else if (colIndex === 4) {  
+      
+
+ if (colIndex === 4) {  
                             let hours = parseFloat(cell) || 0;
                             totalHours += hours;
                             td.textContent = hours.toFixed(2);
@@ -524,7 +520,7 @@ window.onload = highlightRows;
         .then(data => {
             
             let filteredData = data
-                .filter(row => row[5] === "N 10")
+                .filter(row => row[1]!== "N 11110")
                 .map(row => [row[0], row[1], row[2], row[3], row[4], row[6]]);
 
             if (filteredData.length < 2) {
@@ -578,7 +574,7 @@ function downloadExcel1() {
         .then(data => {
             
             let filteredData = data
-                .filter(row => row[5] === "N 10")
+                .filter(row => row[5] !== "N 1110")
                 .map(row => [formatDate(row[0]), row[1], row[2], row[3], row[4], row[6]]);
 
             if (filteredData.length < 1) {
