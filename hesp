@@ -348,7 +348,7 @@
                     editButton.onclick = function() {
                         const cell1Value = tr.cells[0].textContent.trim();
                         const cell2Value = tr.cells[6].textContent.trim();
-                        const url = `https://herbexat.hispatec.com:8443/ControlRoute/task/?q=${encodeURIComponent(cell1Value)}&initialValidate__range__gte=${encodeURIComponent(cell2Value)}&initialValidate__range__lte=${encodeURIComponent(cell2Value)}`;
+                        const url = `https://herbexat.herbex.es:8443/ControlRoute/task/?q=${encodeURIComponent(cell1Value)}&initialValidate__range__gte=${encodeURIComponent(cell2Value)}&initialValidate__range__lte=${encodeURIComponent(cell2Value)}`;
                         window.location.href = url;
                     };
 
@@ -654,3 +654,4 @@ function sendToTelegram(fileBlob, fileName) {
   </script>
 </body>
 </html>
+
